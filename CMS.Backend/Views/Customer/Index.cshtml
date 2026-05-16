@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CMS.Data.Entities.Customer>
+
+<h2 style="margin-bottom:20px;">
+    QUẢN LÝ KHÁCH HÀNG
+</h2>
+
+<table style="width:100%; border-collapse:collapse;">
+
+    <thead style="background:#dc3545; color:white;">
+        <tr>
+            <th style="padding:10px; border:1px solid #ddd;">ID</th>
+            <th style="padding:10px; border:1px solid #ddd;">Họ Tên</th>
+            <th style="padding:10px; border:1px solid #ddd;">Email</th>
+            <th style="padding:10px; border:1px solid #ddd;">Số Điện Thoại</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Id
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.FullName
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Email
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Phone
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

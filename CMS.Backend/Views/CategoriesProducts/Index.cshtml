@@ -1,0 +1,50 @@
+﻿@*
+---------------------------------------------------------
+Họ và tên : Trần Văn Khánh
+MSSV       : 2123210003
+Ngày tạo   : 23/05/2026
+Version    : 1
+Mô tả      : Giao diện danh sách CategoriesProducts
+---------------------------------------------------------
+*@
+
+@model IEnumerable<CMS.Data.Entities.CategoryProduct>
+
+<h2 style="margin-bottom:20px;">
+    QUẢN LÝ DANH MỤC SẢN PHẨM
+</h2>
+
+<table style="width:100%; border-collapse:collapse;">
+
+    <thead style="background:#0d6efd; color:white;">
+        <tr>
+            <th style="padding:10px; border:1px solid #ddd;">ID</th>
+            <th style="padding:10px; border:1px solid #ddd;">Tên Danh Mục</th>
+            <th style="padding:10px; border:1px solid #ddd;">Mô Tả</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Id
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Name
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Description
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

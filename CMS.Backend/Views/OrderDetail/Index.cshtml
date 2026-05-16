@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CMS.Data.Entities.OrderDetail>
+
+<h2 style="margin-bottom:20px;">
+    QUẢN LÝ CHI TIẾT ĐƠN HÀNG
+</h2>
+
+<table style="width:100%; border-collapse:collapse;">
+
+    <thead style="background:#fd7e14; color:white;">
+        <tr>
+            <th style="padding:10px; border:1px solid #ddd;">ID</th>
+            <th style="padding:10px; border:1px solid #ddd;">Order ID</th>
+            <th style="padding:10px; border:1px solid #ddd;">Product ID</th>
+            <th style="padding:10px; border:1px solid #ddd;">Số Lượng</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Id
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.OrderId
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.ProductId
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @item.Quantity
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
