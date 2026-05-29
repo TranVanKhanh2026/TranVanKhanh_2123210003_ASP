@@ -10,68 +10,64 @@ Mô tả      : Giao diện hiển thị danh sách bài viết
 
 @model IEnumerable<CMS.Data.Entities.Post>
 
-<!-- Tiêu đề trang -->
-<h2 style="color:red; margin-bottom:20px;">
-    DANH SÁCH BÀI VIẾT MỚI NHẤT
-</h2>
+<div class="container mt-4">
 
-<!-- Khung chứa danh sách bài viết -->
-<div style="display:flex; gap:20px; flex-wrap:wrap;">
+    <!-- Tiêu đề -->
+    <h2 class="mb-4 text-danger">
+        DANH SÁCH BÀI VIẾT MỚI NHẤT
+    </h2>
 
-    <!-- Duyệt từng bài viết -->
-    @foreach (var item in Model)
-    {
-        <!-- Card bài viết -->
-        <div style="
-            width:250px;
-            border:1px solid #ddd;
-            border-radius:5px;
-            padding:10px;
-        ">
+    <!-- Danh sách bài viết -->
+    <div class="row">
 
-            <!-- Hình ảnh bài viết -->
-            <img src="@item.ImageUrl"
-                 alt="Thumbnail"
-                 style="
-                    width:100%;
-                    height:150px;
-                    object-fit:cover;
-                 " />
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-3">
 
-            <!-- Tiêu đề bài viết -->
-            <h3 style="
-                color:#0d6efd;
-                font-size:18px;
-            ">
-                @item.Title
-            </h3>
+                <div class="card shadow-sm">
 
-            <!-- Nội dung ngắn -->
-            <p>
-                @(item.Content.Length > 50
-                    ? item.Content.Substring(0, 50) + "..."
-                    : item.Content)
-            </p>
+                    <!-- Hình ảnh -->
+                    <img src="@item.ImageUrl"
+                         class="card-img-top"
+                         alt="Thumbnail"
+                         style="height:200px; object-fit:cover;" />
 
-            <!-- Ngày đăng -->
-            <p style="color:gray;">
-                Ngày đăng:
-                @item.CreatedDate.ToString("dd/MM/yyyy")
-            </p>
+                    <div class="card-body">
 
-            <!-- Nút xem chi tiết -->
-            <a href="/Post/Details/@item.Id"
-               style="
-                    background:#0d6efd;
-                    color:white;
-                    padding:5px 10px;
-                    text-decoration:none;
-                    border-radius:4px;
-               ">
-                Xem chi tiết
-            </a>
+                        <!-- Tên danh mục -->
+                        <span class="badge bg-info text-dark">
+                            @item.Category.Name
+                        </span>
 
-        </div>
-    }
+                        <!-- Tiêu đề -->
+                        <h5 class="card-title text-primary mt-2">
+                            @item.Title
+                        </h5>
+
+                        <!-- Nội dung -->
+                        <p class="card-text text-truncate">
+                            @item.Content
+                        </p>
+
+                        <!-- Ngày đăng -->
+                        <p class="text-muted small">
+                            Ngày đăng:
+                            @item.CreatedDate.ToString("dd/MM/yyyy")
+                        </p>
+
+                        <!-- Nút xem chi tiết -->
+                        <a href="/Post/Details/@item.Id"
+                           class="btn btn-outline-primary btn-sm">
+                            Xem chi tiết
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
 
 </div>

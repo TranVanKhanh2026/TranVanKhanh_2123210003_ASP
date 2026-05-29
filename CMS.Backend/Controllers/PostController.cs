@@ -2,8 +2,8 @@
 ---------------------------------------------------------
 Họ và tên : Trần Văn Khánh
 MSSV       : 2123210003
-Ngày tạo   : 23/05/2026
-Version    : 2
+Ngày tạo   : 28/05/2026
+Version    : 3
 Mô tả      : Controller quản lý bài viết
 ---------------------------------------------------------
 */
@@ -11,6 +11,7 @@ Mô tả      : Controller quản lý bài viết
 using Microsoft.AspNetCore.Mvc;
 using CMS.Data;
 using CMS.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMS.Backend.Controllers
 {
@@ -35,12 +36,24 @@ namespace CMS.Backend.Controllers
         // Chức năng:
         // Hiển thị danh sách tất cả bài viết
         // ==========================================
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
-            // Lấy toàn bộ dữ liệu từ bảng Posts
-            var posts = _context.Posts.ToList();
+            // Khai báo query
+            var query = _context.Posts
+                                .Include(p => p.Category)
+                                .OrderByDescending(p => p.CreatedDate)
+                                .AsQueryable();
 
-            // Gửi dữ liệu sang View
+            // Nếu có id thì lọc theo danh mục
+            if (id != null)
+            {
+                query = query.Where(p => p.CategoryId == id);
+            }
+
+            // Lấy dữ liệu
+            var posts = query.ToList();
+
+            // Trả dữ liệu ra View
             return View(posts);
         }
 
@@ -49,10 +62,13 @@ namespace CMS.Backend.Controllers
         // Chức năng:
         // Hiển thị chi tiết bài viết theo Id
         // ==========================================
+        // GET: Post/Details/5
         public IActionResult Details(int id)
         {
-            // Tìm bài viết theo Id
-            var post = _context.Posts.Find(id);
+            // Lấy bài viết kèm thông tin danh mục
+            var post = _context.Posts
+                               .Include(p => p.Category)
+                               .FirstOrDefault(p => p.Id == id);
 
             // Nếu không tìm thấy dữ liệu
             if (post == null)
@@ -63,5 +79,7 @@ namespace CMS.Backend.Controllers
             // Trả dữ liệu sang View
             return View(post);
         }
+
+
     }
 }
