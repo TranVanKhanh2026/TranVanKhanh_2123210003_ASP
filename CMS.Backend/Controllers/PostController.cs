@@ -97,8 +97,11 @@ namespace CMS.Backend.Controllers
             if (uploadImage != null && uploadImage.Length > 0)
             {
                 // 1. Định nghĩa đường dẫn lưu file: wwwroot/uploads
-                string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-
+                string folder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "imgs"
+                );
                 // Tạo thư mục nếu chưa tồn tại
                 if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
@@ -113,7 +116,7 @@ namespace CMS.Backend.Controllers
                 }
 
                 // 4. Lưu đường dẫn vào CSDL để sau này hiển thị
-                model.ImageUrl = "/uploads/" + fileName;
+                model.ImageUrl = "/imgs/" + fileName;
             }
 
             _context.Posts.Add(model);
@@ -157,8 +160,11 @@ namespace CMS.Backend.Controllers
             if (uploadImage != null && uploadImage.Length > 0)
             {
                 // Thực hiện quy trình upload giống như trang Create
-                string folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-                if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+                string folder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "imgs"
+                ); if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(uploadImage.FileName);
                 string filePath = Path.Combine(folder, fileName);
@@ -169,7 +175,7 @@ namespace CMS.Backend.Controllers
                 }
 
                 // Cập nhật đường dẫn ảnh mới vào model
-                model.ImageUrl = "/uploads/" + fileName;
+                model.ImageUrl = "/imgs/" + fileName;
             }
             else
             {

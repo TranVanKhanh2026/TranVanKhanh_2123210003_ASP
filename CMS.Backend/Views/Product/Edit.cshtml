@@ -1,0 +1,55 @@
+﻿
+@model CMS.Data.Entities.Product
+
+<h2>CẬP NHẬT SẢN PHẨM</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="ImageUrl" />
+
+    <p>
+        <label>Tên sản phẩm</label><br />
+        <input asp-for="Name" />
+    </p>
+
+    <p>
+        <label>Mô tả</label><br />
+        <textarea asp-for="Description"></textarea>
+    </p>
+
+    <p>
+        <label>Giá</label><br />
+        <input asp-for="Price" />
+    </p>
+
+    <p>
+        <label>Số lượng</label><br />
+        <input asp-for="StockQuantity" />
+    </p>
+
+    <p>
+        <label>Danh mục</label><br />
+        <select asp-for="CategoryProductId"
+                asp-items="ViewBag.CategoryList">
+        </select>
+    </p>
+
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <p>
+            <img src="@Model.ImageUrl"
+                 width="120" />
+        </p>
+    }
+
+    <p>
+        <label>Ảnh mới</label><br />
+        <input type="file" name="uploadImage" />
+    </p>
+
+    <button type="submit">Cập nhật</button>
+    <a asp-action="Index">Quay lại</a>
+
+</form>
+

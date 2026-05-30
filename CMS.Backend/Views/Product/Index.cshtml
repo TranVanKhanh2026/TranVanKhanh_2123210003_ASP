@@ -2,8 +2,8 @@
 ---------------------------------------------------------
 Họ và tên : Trần Văn Khánh
 MSSV       : 2123210003
-Ngày tạo   : 23/05/2026
-Version    : 1
+Ngày tạo   : 30/05/2026
+Version    : 4
 Mô tả      : Giao diện danh sách sản phẩm
 ---------------------------------------------------------
 *@
@@ -14,14 +14,24 @@ Mô tả      : Giao diện danh sách sản phẩm
     QUẢN LÝ SẢN PHẨM
 </h2>
 
+<p>
+    <a asp-action="Create"
+       style="background:#198754;color:white;padding:10px 15px;text-decoration:none;border-radius:5px;">
+        Thêm sản phẩm
+    </a>
+</p>
+
 <table style="width:100%; border-collapse:collapse;">
 
     <thead style="background:#198754; color:white;">
         <tr>
             <th style="padding:10px; border:1px solid #ddd;">ID</th>
+            <th style="padding:10px; border:1px solid #ddd;">Ảnh</th>
             <th style="padding:10px; border:1px solid #ddd;">Tên Sản Phẩm</th>
+            <th style="padding:10px; border:1px solid #ddd;">Danh Mục</th>
             <th style="padding:10px; border:1px solid #ddd;">Giá</th>
             <th style="padding:10px; border:1px solid #ddd;">Số Lượng</th>
+            <th style="padding:10px; border:1px solid #ddd;">Chức Năng</th>
         </tr>
     </thead>
 
@@ -36,7 +46,21 @@ Mô tả      : Giao diện danh sách sản phẩm
                 </td>
 
                 <td style="padding:10px; border:1px solid #ddd;">
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl"
+                             width="80"
+                             height="80"
+                             style="object-fit:cover;" />
+                    }
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
                     @item.Name
+                </td>
+
+                <td style="padding:10px; border:1px solid #ddd;">
+                    @(item.CategoryProduct?.Name)
                 </td>
 
                 <td style="padding:10px; border:1px solid #ddd;">
@@ -47,9 +71,27 @@ Mô tả      : Giao diện danh sách sản phẩm
                     @item.StockQuantity
                 </td>
 
+                <td style="padding:10px; border:1px solid #ddd;">
+
+                    <a asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       style="background:#0d6efd;color:white;padding:6px 10px;text-decoration:none;border-radius:4px;">
+                        Sửa
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.Id"
+                       onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')"
+                       style="background:#dc3545;color:white;padding:6px 10px;text-decoration:none;border-radius:4px;">
+                        Xóa
+                    </a>
+
+                </td>
+
             </tr>
         }
 
     </tbody>
 
 </table>
+
