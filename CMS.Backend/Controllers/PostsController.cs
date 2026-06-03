@@ -50,6 +50,24 @@ namespace CMS.Backend.Controllers
             // Trả về kết quả cho Frontend kèm mã trạng thái 200 (Thành công)
             return Ok(posts);
         }
+        // 1. Định nghĩa đường dẫn nhận ID: api/posts/{id}
+        [HttpGet("{id}")]
+        public IActionResult GetDetail(int id)
+        {
+            // 2. Tìm bài viết đầu tiên có Id khớp với tham số truyền vào
+            var post = _context.Posts
+                .FirstOrDefault(p => p.Id == id);
+
+            // 3. Xử lý trường hợp không tìm thấy (ID không tồn tại)
+            if (post == null)
+            {
+                // Trả về lỗi 404 kèm thông báo dưới dạng JSON
+                return NotFound(new { message = "Không tìm thấy bài viết này trong hệ thống" });
+            }
+
+            // 4. Trả về bài viết tìm thấy kèm mã 200 (Thành công)
+            return Ok(post);
+        }
 
         // 2. Định nghĩa đường dẫn có tham số: api/posts/category/{id}
         [HttpGet("category/{categoryId}")]
