@@ -3,7 +3,7 @@
 Họ và tên : Trần Văn Khánh
 MSSV       : 2123210003
 Ngày tạo   : 30/05/2026
-Version    : 4
+Version    : 5
 Mô tả      : Controller quản lý người dùng (đầy đủ CRUD)
 ---------------------------------------------------------
 */
@@ -13,9 +13,11 @@ using Microsoft.EntityFrameworkCore;
 using CMS.Data;
 using CMS.Data.Entities;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization; // Cần thêm namespace này
 
 namespace CMS.Backend.Controllers
 {
+    [Authorize(Roles = "Admin")] // Chỉ tài khoản có Role là Admin mới được phép vào
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -3,7 +3,7 @@
 Họ và tên : Trần Văn Khánh
 MSSV       : 2123210003
 Ngày tạo   : 30/05/2026
-Version    : 4
+Version    : 5
 Mô tả      : Controller quản lý bài viết
 ---------------------------------------------------------
 */
@@ -13,9 +13,11 @@ using CMS.Data;
 using CMS.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization; // Cần thêm namespace này
 
 namespace CMS.Backend.Controllers
 {
+    [Authorize] // Bắt buộc phải đăng nhập mới được vào các hàm bên dưới
     public class PostController : Controller
     {
         // ==========================================
