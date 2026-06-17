@@ -3,98 +3,149 @@
 Họ và tên : Trần Văn Khánh
 MSSV       : 2123210003
 Ngày tạo   : 30/05/2026
-Version    : 4
+Version    : 5
 Mô tả      : Giao diện danh sách sản phẩm
 ---------------------------------------------------------
 *@
+@model IEnumerable<CMS.Data.Entities.Product>
 @{
     Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Quản lý sản phẩm";
 }
 
-@model IEnumerable<CMS.Data.Entities.Product>
+<style>
+    .page-header {
+        display: flex; align-items: center;
+        justify-content: space-between; margin-bottom: 1.5rem;
+    }
+    .page-header h2 {
+        font-size: 15px; color: #4A2C17;
+        letter-spacing: 1px; text-transform: uppercase;
+        margin: 0; font-weight: 500;
+    }
+    .page-header .sub { font-size: 12px; color: #A08060; margin-top: 3px; }
+    .btn-add {
+        background: #4A2C17; color: #F5E6C8;
+        border: none; border-radius: 8px;
+        padding: 9px 18px; font-size: 13px;
+        display: inline-flex; align-items: center; gap: 7px;
+        text-decoration: none; transition: background .15s;
+    }
+    .btn-add:hover { background: #C8902A; color: #fff; }
+    .xiao-table-wrap {
+        background: #FFFDF8; border-radius: 12px;
+        border: 0.5px solid #D9C9B0; overflow: hidden;
+    }
+    .xiao-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .xiao-table thead tr { background: #4A2C17; }
+    .xiao-table thead th {
+        padding: 12px 14px; color: #F5E6C8;
+        font-weight: 500; font-size: 11px;
+        letter-spacing: 0.5px; text-transform: uppercase; border: none;
+    }
+    .xiao-table tbody tr { border-bottom: 0.5px solid #EDE0CC; transition: background .15s; }
+    .xiao-table tbody tr:last-child { border-bottom: none; }
+    .xiao-table tbody tr:hover { background: #FAF0E0; }
+    .xiao-table tbody td { padding: 10px 14px; color: #3A2010; vertical-align: middle; }
+    .id-col { color: #A08060; font-size: 12px; width: 55px; }
+    .img-col { width: 80px; }
+    .img-col img {
+        width: 60px; height: 60px; object-fit: cover;
+        border-radius: 8px; border: 0.5px solid #D9C9B0;
+    }
+    .img-placeholder {
+        width: 60px; height: 60px; background: #EDE0CC;
+        border-radius: 8px; display: flex; align-items: center;
+        justify-content: center; font-size: 22px; color: #C8902A;
+    }
+    .name-col { font-weight: 500; color: #4A2C17; }
+    .cat-badge {
+        display: inline-block; background: #F5E6C8; color: #7A5030;
+        font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+        padding: 3px 10px; border-radius: 20px;
+    }
+    .price-col { color: #C8902A; font-weight: 500; }
+    .stock-ok { color: #3A6B2A; font-weight: 500; }
+    .stock-low { color: #A32D2D; font-weight: 500; }
+    .btn-edit {
+        border: 0.5px solid #C8902A; background: transparent;
+        color: #C8902A; border-radius: 6px; padding: 5px 10px;
+        font-size: 11px; text-decoration: none; margin-right: 6px;
+        transition: background .15s, color .15s; display: inline-block;
+    }
+    .btn-edit:hover { background: #C8902A; color: #fff; }
+    .btn-del {
+        border: 0.5px solid #A32D2D; background: transparent;
+        color: #A32D2D; border-radius: 6px; padding: 5px 10px;
+        font-size: 11px; text-decoration: none;
+        transition: background .15s, color .15s; display: inline-block;
+    }
+    .btn-del:hover { background: #A32D2D; color: #fff; }
+</style>
 
-<h2 style="margin-bottom:20px;">
-    QUẢN LÝ SẢN PHẨM
-</h2>
-
-<p>
-    <a asp-action="Create"
-       style="background:#198754;color:white;padding:10px 15px;text-decoration:none;border-radius:5px;">
-        Thêm sản phẩm
+<div class="page-header">
+    <div>
+        <h2><i class="bi bi-box-seam me-2"></i>Quản lý sản phẩm</h2>
+        <div class="sub">Danh sách toàn bộ sản phẩm trong hệ thống</div>
+    </div>
+    <a asp-action="Create" class="btn-add">
+        <i class="bi bi-plus-circle"></i> Thêm sản phẩm
     </a>
-</p>
+</div>
 
-<table style="width:100%; border-collapse:collapse;">
-
-    <thead style="background:#198754; color:white;">
-        <tr>
-            <th style="padding:10px; border:1px solid #ddd;">ID</th>
-            <th style="padding:10px; border:1px solid #ddd;">Ảnh</th>
-            <th style="padding:10px; border:1px solid #ddd;">Tên Sản Phẩm</th>
-            <th style="padding:10px; border:1px solid #ddd;">Danh Mục</th>
-            <th style="padding:10px; border:1px solid #ddd;">Giá</th>
-            <th style="padding:10px; border:1px solid #ddd;">Số Lượng</th>
-            <th style="padding:10px; border:1px solid #ddd;">Chức Năng</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        @foreach (var item in Model)
-        {
+<div class="xiao-table-wrap">
+    <table class="xiao-table">
+        <thead>
             <tr>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.Id
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
-                    {
-                        <img src="@item.ImageUrl"
-                             width="80"
-                             height="80"
-                             style="object-fit:cover;" />
-                    }
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.Name
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @(item.CategoryProduct?.Name)
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.Price
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.StockQuantity
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-
-                    <a asp-action="Edit"
-                       asp-route-id="@item.Id"
-                       style="background:#0d6efd;color:white;padding:6px 10px;text-decoration:none;border-radius:4px;">
-                        Sửa
-                    </a>
-
-                    <a asp-action="Delete"
-                       asp-route-id="@item.Id"
-                       onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')"
-                       style="background:#dc3545;color:white;padding:6px 10px;text-decoration:none;border-radius:4px;">
-                        Xóa
-                    </a>
-
-                </td>
-
+                <th>ID</th>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Danh mục</th>
+                <th>Giá</th>
+                <th>Tồn kho</th>
+                <th style="text-align:center">Thao tác</th>
             </tr>
-        }
-
-    </tbody>
-
-</table>
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="id-col">#@item.Id</td>
+                    <td class="img-col">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" alt="@item.Name" />
+                        }
+                        else
+                        {
+                            <div class="img-placeholder">☕</div>
+                        }
+                    </td>
+                    <td class="name-col">@item.Name</td>
+                    <td>
+                        <span class="cat-badge">@(item.CategoryProduct?.Name ?? "—")</span>
+                    </td>
+                    <td class="price-col">
+                        @item.Price.ToString("N0") ₫
+                    </td>
+                    <td class="@(item.StockQuantity <= 5 ? "stock-low" : "stock-ok")">
+                        @item.StockQuantity
+                        @if (item.StockQuantity <= 5)
+                        {
+                            <i class="bi bi-exclamation-triangle-fill ms-1" title="Sắp hết hàng"></i>
+                        }
+                    </td>
+                    <td style="text-align:center">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit">
+                            <i class="bi bi-pencil"></i> Sửa
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-del"
+                           onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                            <i class="bi bi-trash"></i> Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

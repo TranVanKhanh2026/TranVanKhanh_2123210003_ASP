@@ -21,6 +21,7 @@ public class HomeController : Controller
                                   .Take(3) // Lấy 3 bài viết
                                   .ToList();
 
+         
         return View(latestPosts);
     }
 }

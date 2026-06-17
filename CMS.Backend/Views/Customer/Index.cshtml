@@ -1,47 +1,165 @@
 ﻿@model IEnumerable<CMS.Data.Entities.Customer>
 @{
     Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Quản lý khách hàng";
 }
-<h2 style="margin-bottom:20px;">
-    QUẢN LÝ KHÁCH HÀNG
-</h2>
 
-<table style="width:100%; border-collapse:collapse;">
+<style>
+    .page-header {
+        margin-bottom: 1.5rem;
+    }
 
-    <thead style="background:#dc3545; color:white;">
-        <tr>
-            <th style="padding:10px; border:1px solid #ddd;">ID</th>
-            <th style="padding:10px; border:1px solid #ddd;">Họ Tên</th>
-            <th style="padding:10px; border:1px solid #ddd;">Email</th>
-            <th style="padding:10px; border:1px solid #ddd;">Số Điện Thoại</th>
-        </tr>
-    </thead>
-
-    <tbody>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.Id
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.FullName
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.Email
-                </td>
-
-                <td style="padding:10px; border:1px solid #ddd;">
-                    @item.Phone
-                </td>
-
-            </tr>
+        .page-header h2 {
+            font-size: 15px;
+            color: #4A2C17;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+            font-weight: 500;
         }
 
-    </tbody>
+        .page-header .sub {
+            font-size: 12px;
+            color: #A08060;
+            margin-top: 3px;
+        }
 
-</table>
+    .xiao-table-wrap {
+        background: #FFFDF8;
+        border-radius: 12px;
+        border: 0.5px solid #D9C9B0;
+        overflow: hidden;
+    }
+
+    .xiao-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+        .xiao-table thead tr {
+            background: #4A2C17;
+        }
+
+        .xiao-table thead th {
+            padding: 12px 16px;
+            color: #F5E6C8;
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: none;
+        }
+
+        .xiao-table tbody tr {
+            border-bottom: 0.5px solid #EDE0CC;
+            transition: background .15s;
+        }
+
+            .xiao-table tbody tr:last-child {
+                border-bottom: none;
+            }
+
+            .xiao-table tbody tr:hover {
+                background: #FAF0E0;
+            }
+
+        .xiao-table tbody td {
+            padding: 12px 16px;
+            color: #3A2010;
+            vertical-align: middle;
+        }
+
+    .id-col {
+        color: #A08060;
+        font-size: 12px;
+        width: 55px;
+    }
+
+    .name-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #EDE0CC;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 500;
+        color: #4A2C17;
+        flex-shrink: 0;
+    }
+
+    .name-text {
+        font-weight: 500;
+        color: #4A2C17;
+    }
+
+    .email-col {
+        color: #7A5C3A;
+    }
+
+    .phone-col {
+        color: #A08060;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .address-col {
+        color: #7A5C3A;
+        font-size: 12px;
+    }
+</style>
+
+<div class="page-header">
+    <h2><i class="bi bi-person-lines-fill me-2"></i>Quản lý khách hàng</h2>
+    <div class="sub">Danh sách khách hàng đã đăng ký</div>
+</div>
+
+<div class="xiao-table-wrap">
+    <table class="xiao-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="id-col">#@item.Id</td>
+                    <td>
+                        <div class="name-wrap">
+                            <div class="avatar">
+                                @(item.FullName?.Length > 0
+                                    ? string.Concat(item.FullName.Split(' ')
+                                    .Where(w => w.Length > 0)
+                                    .TakeLast(2)
+                                    .Select(w => w[0].ToString().ToUpper()))
+                                    : "?")
+                            </div>
+                            <span class="name-text">@item.FullName</span>
+                        </div>
+                    </td>
+                    <td class="email-col">
+                        <i class="bi bi-envelope me-1"></i>@item.Email
+                    </td>
+                    <td class="phone-col">
+                        <i class="bi bi-telephone me-1"></i>@item.Phone
+                    </td>
+                    <td class="address-col">@item.Address</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

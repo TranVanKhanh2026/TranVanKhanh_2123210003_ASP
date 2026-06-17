@@ -1,38 +1,146 @@
 ﻿@{
-    Layout = null; // Trang đăng nhập độc lập, không dùng Layout chung
+    Layout = null;
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Đăng nhập hệ thống</title>
+    <title>Đăng nhập — Xiao Café</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background-color: #F5EFE6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Georgia, serif;
+        }
+        .login-card {
+            background: #FFFDF8;
+            border-radius: 16px;
+            border: 0.5px solid #D9C9B0;
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+        }
+        .login-header {
+            background: #4A2C17;
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+        .login-logo {
+            width: 56px;
+            height: 56px;
+            background: #C8902A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 24px;
+        }
+        .login-header .subtitle {
+            color: #F5E6C8;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 0 4px;
+            font-family: sans-serif;
+            font-weight: 400;
+        }
+        .login-header .brand {
+            color: #C8902A;
+            font-size: 22px;
+            margin: 0;
+            font-style: italic;
+        }
+        .login-body { padding: 2rem 1.75rem; }
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .divider span {
+            font-size: 12px;
+            color: #A08060;
+            white-space: nowrap;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 0.5px;
+            background: #D9C9B0;
+        }
+        .form-label {
+            font-size: 12px;
+            color: #7A5C3A;
+            font-family: sans-serif;
+            letter-spacing: 0.5px;
+        }
+        .form-control {
+            background: #FAF5EE;
+            border: 0.5px solid #D9C9B0;
+            border-radius: 8px;
+            color: #3A2010;
+            font-family: sans-serif;
+        }
+        .form-control:focus {
+            border-color: #C8902A;
+            box-shadow: none;
+            background: #FAF5EE;
+        }
+        .btn-login {
+            width: 100%;
+            background: #4A2C17;
+            color: #F5E6C8;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-family: sans-serif;
+            transition: background .2s;
+        }
+        .btn-login:hover { background: #C8902A; color: #fff; }
+        .login-footer {
+            text-align: center;
+            margin-top: 1.25rem;
+            font-size: 12px;
+            color: #A08060;
+            font-family: sans-serif;
+        }
+        .login-footer span { color: #C8902A; }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card shadow border-0">
-                    <div class="card-header bg-primary text-white text-center py-3">
-                        <h5 class="mb-0">HỆ THỐNG QUẢN TRỊ CMS</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <form asp-action="Login" method="post">
-                            <div class="mb-3">
-                                <label class="form-label">Tên đăng nhập</label>
-                                <input type="text" name="username" class="form-control" required />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Mật khẩu</label>
-                                <input type="password" name="password" class="form-control" required />
-                            </div>
-                            @if (ViewBag.Error != null)
-                            {
-                                    <div class="alert alert-danger py-2">@ViewBag.Error</div>
-                            }
-                            <button type="submit" class="btn btn-primary w-100">ĐĂNG NHẬP</button>
-                        </form>
-                    </div>
+<body>
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-logo">☕</div>
+            <p class="subtitle">Quản trị hệ thống</p>
+            <p class="brand">Xiao Café</p>
+        </div>
+        <div class="login-body">
+            <div class="divider"><span>Đăng nhập</span></div>
+            <form asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Tên đăng nhập</label>
+                    <input type="text" name="username" class="form-control" placeholder="Nhập tên đăng nhập..." required />
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Mật khẩu</label>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••" required />
+                </div>
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger py-2" style="font-size:13px; font-family:sans-serif;">@ViewBag.Error</div>
+                }
+                <button type="submit" class="btn-login">ĐĂNG NHẬP</button>
+            </form>
+            <div class="login-footer">
+                Sách hay · Cà phê ngon · <span>Xiao Café</span>
             </div>
         </div>
     </div>
