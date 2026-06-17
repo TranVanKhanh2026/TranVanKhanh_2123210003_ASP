@@ -1,34 +1,38 @@
 ﻿import React from 'react';
 import CategoryProductList from './components/CategoryProductList';
-import ProductList from './components/ProductList';
-import PostList from './components/PostList'; // Nhớ thêm dòng import này để kích hoạt phần tin tức
+import PostList from './components/PostList';
+import BlogCategoryList from './components/BlogCategoryList'; // 1. Import Component bài tập tự làm vào đây
+import './App.css';
 
 function App() {
     return (
         <div className="container mt-5">
-            <header className="pb-3 mb-4 border-bottom">
-                <span className="fs-4 font-weight-bold text-dark">
-                    👗 FASHION BOUTIQUE - THỜI TRANG CÔNG SỞ & DẠ HỘI
+            <header className="pb-3 mb-4 border-bottom d-flex justify-content-between align-items-center">
+                <span className="fs-4 font-weight-bold text-dark text-uppercase">
+                    👗 Fashion Boutique - Hệ Thống Quản Trị Nội Dung & Bán Hàng
                 </span>
+                <span className="badge badge-success px-3 py-2">Học Phần Chuyên Đề ASP.NET + ReactJS</span>
             </header>
 
-            {/* KHU VỰC 1: SHOPPING (Sản phẩm và Bộ lọc danh mục sản phẩm) */}
             <div className="row">
+                {/* CỘT TRÁI: CHỨA CÁC BỘ LỌC PHÂN LOẠI DỮ LIỆU */}
                 <div className="col-md-4">
+                    {/* Phân loại phục vụ thương mại điện tử (Đã làm ở buổi trước) */}
                     <CategoryProductList />
-                </div>
-                <div className="col-md-8">
-                    <h4 className="mb-4 text-uppercase text-secondary font-weight-bold">Bộ sưu tập mới nhất</h4>
-                    <ProductList />
-                </div>
-            </div>
 
-            {/* KHU VỰC 2: BLOG & BLOG CATEGORIES (Tin tức thời trang công sở, dạ hội) */}
-            <div className="row mt-5">
-                <div className="col-12">
+                    {/* BÀI TẬP TỰ LÀM: Phân loại phục vụ quản trị nội dung tin tức blog */}
+                    <BlogCategoryList />
+                </div>
+
+                {/* CỘT PHẢI: CHỨA NỘI DUNG CHI TIẾT HIỂN THỊ CHÍNH */}
+                <div className="col-md-8">
                     <PostList />
                 </div>
             </div>
+
+            <footer className="pt-3 mt-5 text-muted border-top text-center small">
+                <p>© 2026 - Đồ án thực hành phân tầng ASP.NET Core Web API kết hợp ReactJS Client-side</p>
+            </footer>
         </div>
     );
 }
