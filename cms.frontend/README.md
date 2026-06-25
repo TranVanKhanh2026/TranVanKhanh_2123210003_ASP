@@ -1,70 +1,231 @@
-# Getting Started with Create React App
+﻿# Xiao Coffee & Book
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Website quản lý và bán sản phẩm dành cho quán cafe sách Xiao, được xây dựng theo mô hình 3 tầng gồm CMS.Data, CMS.Backend và cms.frontend.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+# Công nghệ sử dụng
 
-### `npm start`
+## Backend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* ASP.NET Core Web API
+* Entity Framework Core
+* SQL Server
+* Authentication & Authorization
+* Swagger API
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Frontend
 
-### `npm test`
+* ReactJS
+* Axios
+* React Router
+* TailwindCSS / Bootstrap
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+# Cấu trúc Solution
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```text
+CMS.Data/
+│
+├── Entities
+├── DbContext
+├── Repository
+└── Migrations
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+CMS.Backend/
+│
+├── Controllers
+├── Services
+├── Authentication
+├── API
+└── MVC Admin
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+cms.frontend/
+│
+├── public
+├── src
+│   ├── components
+│   ├── pages
+│   ├── services
+│   ├── layouts
+│   └── routes
+└── package.json
+```
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Yêu cầu môi trường
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* Visual Studio 2022
+* .NET SDK
+* SQL Server
+* NodeJS
+* Git
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Clone Source Code
 
-## Learn More
+```bash
+git clone <repository-url>
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Sau khi clone thành công, mở file Solution (.sln) bằng Visual Studio 2022.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+# Hướng dẫn chạy Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Bước 1
 
-### Analyzing the Bundle Size
+Mở file Solution (.sln) bằng Visual Studio 2022.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Bước 2
 
-### Making a Progressive Web App
+Kiểm tra chuỗi kết nối trong file:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```json
+appsettings.json
+```
 
-### Advanced Configuration
+Ví dụ:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=.;Database=XiaoCoffeeBook;Trusted_Connection=True;TrustServerCertificate=True"
+}
+```
 
-### Deployment
+## Bước 3
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Thực hiện Migration (nếu cơ sở dữ liệu chưa được tạo):
 
-### `npm run build` fails to minify
+```powershell
+Update-Database
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Bước 4
+
+Nhấn phím F5 để chạy dự án.
+
+Backend sẽ khởi động và Swagger sẽ được mở trên trình duyệt.
+
+---
+
+# Hướng dẫn chạy Frontend
+
+Mở Terminal tại thư mục:
+
+```text
+cms.frontend
+```
+
+## Cài đặt thư viện
+
+```bash
+npm install
+```
+
+## Cấu hình môi trường
+
+Tạo file:
+
+```text
+.env
+```
+
+Ví dụ:
+
+```env
+REACT_APP_API_URL=https://localhost:7078/api
+```
+
+## Chạy ứng dụng
+
+```bash
+npm start
+```
+
+Frontend sẽ chạy tại:
+
+```text
+http://localhost:3000
+```
+
+---
+
+# Các chức năng chính
+
+## Quản trị hệ thống
+
+* Quản lý Category
+* Quản lý CategoryProduct
+* Quản lý Product
+* Quản lý Post
+* Quản lý User
+* Quản lý Customer
+* Quản lý Order
+* Quản lý OrderDetail
+
+## Khách hàng
+
+* Xem danh sách sản phẩm
+* Xem chi tiết sản phẩm
+* Xem bài viết
+* Tìm kiếm sản phẩm
+* Lọc sản phẩm theo giá
+* Thêm sản phẩm vào giỏ hàng
+* Cập nhật số lượng trong giỏ hàng
+* Thanh toán đơn hàng
+* Đăng ký tài khoản
+* Đăng nhập
+* Quên mật khẩu
+
+---
+
+# Bảo mật
+
+* Sử dụng Authentication và Authorization.
+* Khu vực quản trị được bảo vệ bằng [Authorize].
+* Quản lý người dùng được phân quyền bằng [Authorize(Roles = "Admin")].
+* Mật khẩu được mã hóa trước khi lưu vào cơ sở dữ liệu.
+* Cấu hình CORS cho phép ReactJS truy cập Web API.
+
+---
+
+# API Documentation
+
+Sau khi chạy Backend, Swagger API có thể truy cập tại:
+
+```text
+https://localhost:7078/swagger
+```
+
+---
+
+# Database
+
+Hệ thống sử dụng SQL Server và Entity Framework Core.
+
+Các thực thể chính:
+
+* Category
+* CategoryProduct
+* Product
+* Post
+* User
+* Customer
+* Order
+* OrderDetail
+
+---
+
+# Thành viên thực hiện
+
+* Họ và tên: Trần Văn Khánh
+* MSSV: 2123210003
+* Lớp: CCQ2311A
+* Dự án: Xiao Coffee & Book
+
+
