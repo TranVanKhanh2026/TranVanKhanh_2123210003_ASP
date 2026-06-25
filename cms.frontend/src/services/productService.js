@@ -1,9 +1,15 @@
-﻿import axiosClient from '../api/axiosClient';
+﻿// services/productService.js
+import axiosClient from '../api/axiosClient';
 
 const productService = {
-    // Hàm gọi API lấy toàn bộ danh sách quần áo, váy dạ hội
+    // Lấy tất cả sản phẩm
     getAllProducts: () => {
-        const url = '/Products'; // Phải khớp chính xác với Router trong ProductsController phía Backend
+        return axiosClient.get('/Products');
+    },
+
+    // Lấy sản phẩm theo categoryId (nếu có)
+    getProducts: (categoryId) => {
+        const url = categoryId ? `/Products?categoryId=${categoryId}` : '/Products';
         return axiosClient.get(url);
     }
 };

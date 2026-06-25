@@ -43,7 +43,11 @@ namespace CMS.Backend.Controllers
                     p.Title,
                     p.ImageUrl,
                     p.CreatedDate,
-                    CategoryName = p.Category.Name // Lấy tên danh mục thay vì chỉ lấy ID
+                    p.CategoryId,
+                    CategoryName = p.Category.Name, // Lấy tên danh mục thay vì chỉ lấy ID
+                    ShortDescription = p.Content != null
+                        ? p.Content.Substring(0, Math.Min(200, p.Content.Length))
+                         : ""
                 })
                 .ToList();
 

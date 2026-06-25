@@ -1,35 +1,68 @@
-﻿/*
----------------------------------------------------------
-Họ và tên : Trần Văn Khánh
-MSSV       : 2123210003
-Ngày tạo   : 23/05/2026
-Version    : 1
-Mô tả      : Controller quản lý danh mục sản phẩm
----------------------------------------------------------
-*/
-
+﻿using CMS.Data;
+using CMS.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CMS.Data;
 
-namespace CMS.Backend.Controllers
+[Authorize]
+public class CategoriesProductsController : Controller
 {
-    public class CategoriesProductsController : Controller
+    private readonly ApplicationDbContext _context;
+
+    public CategoriesProductsController(ApplicationDbContext context)
     {
-        // Khai báo DbContext
-        private readonly ApplicationDbContext _context;
+        _context = context;
+    }
 
-        // Constructor Injection
-        public CategoriesProductsController(ApplicationDbContext context)
+    public IActionResult Index()
+    {
+        var data = _context.CategoriesProducts.ToList();
+        return View(data);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Create(CategoryProduct model)
+    {
+        _context.CategoriesProducts.Add(model);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult Delete(int id)
+    {
+        var category = _context.CategoriesProducts.Find(id);
+
+        if (category != null)
         {
-            _context = context;
+            _context.CategoriesProducts.Remove(category);
+            _context.SaveChanges();
         }
 
-        // Hiển thị danh sách CategoriesProducts
-        public IActionResult Index()
-        {
-            var categoriesProducts = _context.CategoriesProducts.ToList();
+        return RedirectToAction("Index");
+    }
 
-            return View(categoriesProducts);
-        }
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var category = _context.CategoriesProducts.Find(id);
+
+        if (category == null)
+            return NotFound();
+
+        return View(category);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(CategoryProduct model)
+    {
+        _context.CategoriesProducts.Update(model);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
     }
 }

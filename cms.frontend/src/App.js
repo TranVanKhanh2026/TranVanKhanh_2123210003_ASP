@@ -1,38 +1,27 @@
-﻿import React from 'react';
-import CategoryProductList from './components/CategoryProductList';
-import PostList from './components/PostList';
-import BlogCategoryList from './components/BlogCategoryList'; // 1. Import Component bài tập tự làm vào đây
+﻿// src/App.js
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import ShopPage from './pages/ShopPage';
+import BlogPage from './pages/BlogPage';
+import AboutPage from './pages/AboutPage';
 import './App.css';
 
 function App() {
     return (
-        <div className="container mt-5">
-            <header className="pb-3 mb-4 border-bottom d-flex justify-content-between align-items-center">
-                <span className="fs-4 font-weight-bold text-dark text-uppercase">
-                    👗 Fashion Boutique - Hệ Thống Quản Trị Nội Dung & Bán Hàng
-                </span>
-                <span className="badge badge-success px-3 py-2">Học Phần Chuyên Đề ASP.NET + ReactJS</span>
-            </header>
-
-            <div className="row">
-                {/* CỘT TRÁI: CHỨA CÁC BỘ LỌC PHÂN LOẠI DỮ LIỆU */}
-                <div className="col-md-4">
-                    {/* Phân loại phục vụ thương mại điện tử (Đã làm ở buổi trước) */}
-                    <CategoryProductList />
-
-                    {/* BÀI TẬP TỰ LÀM: Phân loại phục vụ quản trị nội dung tin tức blog */}
-                    <BlogCategoryList />
-                </div>
-
-                {/* CỘT PHẢI: CHỨA NỘI DUNG CHI TIẾT HIỂN THỊ CHÍNH */}
-                <div className="col-md-8">
-                    <PostList />
-                </div>
-            </div>
-
-            <footer className="pt-3 mt-5 text-muted border-top text-center small">
-                <p>© 2026 - Đồ án thực hành phân tầng ASP.NET Core Web API kết hợp ReactJS Client-side</p>
-            </footer>
+        <div style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+            <Header />
+            <main>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/shop" element={<ShopPage />} />
+                    <Route path="/blog" element={<BlogPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                </Routes>
+            </main>
+            <Footer />
         </div>
     );
 }

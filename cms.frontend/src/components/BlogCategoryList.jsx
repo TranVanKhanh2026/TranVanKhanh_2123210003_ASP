@@ -1,53 +1,111 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿// src/components/BlogCategoryList.js
+import React, { useState, useEffect } from 'react';
 import blogService from '../services/blogService';
 
-const BlogCategoryList = () => {
-    // Kho lưu trữ danh sách chuyên mục bài viết lấy từ SQL Server
+const BlogCategoryList = ({ activeCategoryId, onSelectCategory }) => {
     const [blogCategories, setBlogCategories] = useState([]);
-    // Trạng thái tối ưu trải nghiệm người dùng trong lúc đợi API phản hồi
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchBlogCategories = async () => {
             try {
                 setLoading(true);
-                // Gọi sang lớp Service chứa trục Axios tập trung
                 const data = await blogService.getBlogCategories();
-                setBlogCategories(data); // Đẩy dữ liệu JSON nhận được vào State
+                setBlogCategories(data);
             } catch (error) {
-                console.error("Lỗi hệ thống khi gọi API chuyên mục tin tức:", error);
+                console.error("Lỗi tải danh mục:", error);
             } finally {
-                setLoading(false); // Đóng trạng thái Loading
+                setLoading(false);
             }
         };
-
         fetchBlogCategories();
-    }, []); // Mảng rỗng đảm bảo không xảy ra vòng lặp render vô hạn làm treo trình duyệt
+    }, []);
 
-    if (loading) {
-        return <div className="text-center my-3 text-muted small">Đang nạp các chuyên mục bài viết...</div>;
-    }
+    const itemStyle = (isActive) => ({
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '10px 16px',
+        cursor: 'pointer',
+        borderRadius: '6px',
+        marginBottom: '2px',
+        fontSize: '0.9rem',
+        fontWeight: isActive ? '600' : '400',
+        color: isActive ? '#FAF7F2' : '#4A3728',
+        backgroundColor: isActive ? '#1E120C' : 'transparent',
+        border: 'none',
+        width: '100%',
+        textAlign: 'left',
+        transition: 'background-color 0.15s ease'
+    });
 
     return (
-        <div className="card shadow-sm p-3 mt-4 bg-white rounded">
-            <h5 className="card-title text-uppercase font-weight-bold text-secondary">
-                <i className="fa-solid fa-tags mr-2 text-info"></i> Chủ đề bài viết
-            </h5>
+        <div
+            className="bg-white rounded"
+            style={{ border: '1px solid #EDE8E0', overflow: 'hidden' }}
+        >
+            {/* Header */}
+            <div style={{ padding: '16px 16px 12px', borderBottom: '1px solid #EDE8E0' }}>
+                <h6
+                    className="mb-0 text-uppercase"
+                    style={{
+                        fontSize: '0.75rem',
+                        fontWeight: '700',
+                        letterSpacing: '1px',
+                        color: '#8B6A3E'
+                    }}
+                >
+                    <i className="fa-solid fa-layer-group mr-2"></i> Chuyên mục
+                </h6>
+            </div>
 
-            <div className="list-group list-group-flush mt-2">
-                {blogCategories.length === 0 ? (
-                    <p className="text-muted small pl-2">Chưa có chủ đề tin tức nào.</p>
+            {/* Danh sách */}
+            <div style={{ padding: '8px' }}>
+                {loading ? (
+                    <div className="text-center py-3">
+                        <div className="spinner-border spinner-border-sm text-secondary" role="status"></div>
+                    </div>
                 ) : (
-                    blogCategories.map((cate) => (
-                        <a
-                            key={cate.id}
-                            href={`/blog/category/${cate.id}`}
-                            className="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-1 text-dark text-decoration-none small"
+                    <>
+                        <button
+                            style={itemStyle(activeCategoryId === null)}
+                            onClick={() => onSelectCategory(null)}
+                            onMouseEnter={e => {
+                                if (activeCategoryId !== null) e.currentTarget.style.backgroundColor = '#F5F0E8';
+                            }}
+                            onMouseLeave={e => {
+                                if (activeCategoryId !== null) e.currentTarget.style.backgroundColor = 'transparent';
+                            }}
                         >
-                            <span><i className="fa-regular fa-hashtag mr-2 text-muted"></i>{cate.name}</span>
-                            <span className="badge badge-light border text-muted">Read</span>
-                        </a>
-                    ))
+                            <span>Tất cả bài viết</span>
+                            {activeCategoryId === null && (
+                                <i className="fa-solid fa-check" style={{ fontSize: '0.75rem' }}></i>
+                            )}
+                        </button>
+
+                        {blogCategories.length === 0 ? (
+                            <p className="text-center text-muted small py-2">Không có chuyên mục nào.</p>
+                        ) : (
+                            blogCategories.map((cate) => (
+                                <button
+                                    key={cate.id}
+                                    style={itemStyle(activeCategoryId === cate.id)}
+                                    onClick={() => onSelectCategory(cate.id)}
+                                    onMouseEnter={e => {
+                                        if (activeCategoryId !== cate.id) e.currentTarget.style.backgroundColor = '#F5F0E8';
+                                    }}
+                                    onMouseLeave={e => {
+                                        if (activeCategoryId !== cate.id) e.currentTarget.style.backgroundColor = 'transparent';
+                                    }}
+                                >
+                                    <span>{cate.name}</span>
+                                    {activeCategoryId === cate.id && (
+                                        <i className="fa-solid fa-check" style={{ fontSize: '0.75rem' }}></i>
+                                    )}
+                                </button>
+                            ))
+                        )}
+                    </>
                 )}
             </div>
         </div>
